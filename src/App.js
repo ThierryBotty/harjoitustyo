@@ -28,7 +28,7 @@ const Weather = ( {weather, city} ) => {
 
   let a = weather["wfs:FeatureCollection"]["wfs:member"][0]["omso:GridSeriesObservation"][0]["om:result"][0]["gmlcov:MultiPointCoverage"][0]["gmlcov:rangeType"][0]["swe:DataRecord"][0]["swe:field"]
   let b = a[1]["$"]
-  let c = weather["wfs:FeatureCollection"]["wfs:member"][0]["omso:GridSeriesObservation"][0]["om:observedProperty"][0]["$"]
+  let c = weather["wfs:FeatureCollection"]["wfs:member"][0]["omso:GridSeriesObservation"][0]["om:observedProperty"][0]["$"]["xlink:href"]
   console.log(c)
   return(
     <>
@@ -37,7 +37,7 @@ const Weather = ( {weather, city} ) => {
       </div>
       <div>
       <b>Temperature: </b>
-      <svg> <use href={c["xlink:href"]} />
+      <svg> <use href={c} />
       </svg>
     </div>
   </>)
@@ -49,13 +49,12 @@ const App = () => {
       <>
       <div>
         <form>
-          <label> City: <input value={city} onChange={(x)=>{
-            x.preventDefault()
-
-            setCity(x.target.value)
-            }
-          } name="city" /> </label>
-          <input type="submit" value="Submit" />
+          <label> City:
+            <input value={city} onChange={(x)=>{
+              x.preventDefault()
+              setCity(x.target.value)}
+              } name="city" />
+          </label>
           <City city = {city}/>
         </form>
       </div>
